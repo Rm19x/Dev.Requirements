@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Requirements Suite - by Mr.Rm19</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <header class="main-header">
+        <h1>Developer Requirements</h1>
+        <p>Platform Multi-Tools</p>
+        <div class="author-badge">
+            Developed by: <a href="https://github.com/Rm19x" target="_blank" rel="noopener noreferrer">Mr.Rm19 (github.com/Rm19x)</a>
+        </div>
+    </header>
+
+    <nav class="tabs-navigation">
+        <button class="tab-btn active" onclick="switchTab(event, 'tab-core')">Core Tools</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-encoders')">Encoders & Decoders</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-crypto')">Crypto & Obfuscator</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-formatters')">Formatters & Dev-Minifier</button>
+        <button class="tab-btn" onclick="switchTab(event, 'tab-visual')">Visual & Data Tools</button>
+    </nav>
+
+    <main class="main-content">
+
+        <div id="tab-core" class="tab-panel active">
+            <section class="tool-card">
+                <h2>1. Domain Tracker Engine</h2>
+                <p class="tool-desc">Melacak status pembacaan daftar domain murni dari file .txt menggunakan penyimpanan lokal browser.</p>
+                <div class="upload-zone" id="drop-zone-tracker">
+                    <p id="tracker-prompt">Seret & jatuhkan file .txt berisi daftar domain ke sini, atau klik untuk memilih file</p>
+                    <label class="btn-action btn-orange" for="file-input-tracker">Pilih File Txt</label>
+                    <input type="file" id="file-input-tracker" accept=".txt">
+                </div>
+                <div class="tool-controls">
+                    <input type="text" id="tracker-search" placeholder="Cari domain..." disabled>
+                    <span class="badge-status" id="tracker-stats">0 / 0 Selesai</span>
+                    <button class="btn-action btn-clear" onclick="resetDomainTracker()">Reset Track</button>
+                </div>
+                <ul class="result-list-scrollable" id="tracker-list-output">
+                    <li class="placeholder-text">Belum ada data domain yang dimuat.</li>
+                </ul>
+            </section>
+
+            <section class="tool-card">
+                <h2>2. URL & Path Extractor Tools</h2>
+                <p class="tool-desc">Mengekstrak seluruh tautan URL (http/https) murni dari tumpukan teks log mentah atau arsip defacement.</p>
+                <textarea id="extractor-input" placeholder="Tempelkan data teks atau log mentah di sini..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="extractURLsReal()">Ekstrak URL</button>
+                    <button class="btn-action btn-clear" onclick="clearURLExtractor()">Bersihkan</button>
+                </div>
+                <div class="results-header">Total Terdeteksi: <span id="extractor-count">0</span></div>
+                <div class="result-box-scrollable" id="extractor-output">Hasil pemisahan URL nyata akan muncul di sini...</div>
+            </section>
+
+            <section class="tool-card">
+                <h2>3. URL Custom Path Append Tools</h2>
+                <p class="tool-desc">Otomatis mengambil domain utama (root) dari daftar URL lalu memasang path kustom pilihan Anda.</p>
+                <textarea id="append-input" placeholder="Tempelkan daftar web atau log mentah dengan URL di sini..."></textarea>
+                <div class="inline-input-group">
+                    <label for="append-path-value">Path yang Ditambahkan:</label>
+                    <input type="text" id="append-path-value" value="/ganteng.txt" placeholder="/path-pilihan.txt">
+                </div>
+                <div class="btn-group">
+                    <button class="btn-action btn-orange" onclick="processPathAppendReal()">Proses URL & Path</button>
+                    <button class="btn-action btn-dark" onclick="copyAppendResultsReal()">Copy Semua Hasil</button>
+                    <button class="btn-action btn-clear" onclick="clearPathAppender()">Bersihkan</button>
+                </div>
+                <div class="results-header">Total Hasil: <span id="append-count">0</span></div>
+                <div class="result-box-scrollable" id="append-output">Hasil penggabungan URL baru akan muncul di sini...</div>
+            </section>
+
+            <section class="tool-card">
+                <h2>@_@ Mass Website Deleter </h2>
+                <p class="tool-desc">Membandingkan daftar website pusat dengan blacklist untuk melakukan penghapusan massal instan.</p>
+                
+                <div class="markdown-editor-split" style="gap: 15px; margin-bottom: 15px;">
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 14px; margin-bottom: 5px; color: var(--text-main);">1. Website Pusat:</h3>
+                        <textarea id="websitePusat" style="height: 150px;" placeholder="Copas semua website dari website pusat di sini..."></textarea>
+                    </div>
+                    <div style="flex: 1;">
+                        <h3 style="font-size: 14px; margin-bottom: 5px; color: var(--text-main);">2. Website yang Ingin Dihapus :</h3>
+                        <textarea id="websiteHapus" style="height: 150px;" placeholder="Copas isi dari file blacklist di sini..."></textarea>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn-action btn-orange" style="background-color: #ff4d4d;" onclick="prosesHapusMassalReal()">Hapus Massal Sekarang!</button>
+                    <button class="btn-action btn-clear" onclick="clearMassDeleter()">Bersihkan</button>
+                </div>
+
+                <div id="mass-delete-result-container" style="display:none; margin-top: 15px; background: #edf5f0; padding: 15px; border-radius: 8px; border: 1px solid #b7ebb7;">
+                    <h3 style="margin-top:0; font-size:15px; color: #4e8061;">✅ Hasil Bersih (Tinggal Copy):</h3>
+                    <p style="font-size: 13px; margin: 5px 0;">Total website terhapus: <span id="totalTerhapus" style="font-weight:bold; color:#ff4d4d;">0</span></p>
+                    <textarea id="websiteHasil" style="width:100%; height:150px; background: #fff; font-family: monospace; font-size: 13px;" readonly></textarea>
+                </div>
+            </section>
+        </div>
+
+
+        <div id="tab-encoders" class="tab-panel">
+            <section class="tool-card">
+                <h2>4. URL Encoder & Decoder</h2>
+                <textarea id="url-codec-input" placeholder="Masukkan teks atau string URL yang ingin diproses..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processURLEncode()">URL Encode</button>
+                    <button class="btn-action btn-orange" onclick="processURLDecode()">URL Decode</button>
+                    <button class="btn-action btn-clear" onclick="clearURLCodec()">Bersihkan</button>
+                </div>
+                <textarea id="url-codec-output" readonly placeholder="Hasil konversi URL Encoder / Decoder..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>5. HTML Entity Encoder</h2>
+                <textarea id="html-entity-input" placeholder="Masukkan kode teks/HTML biasa di sini (Contoh: <script>)..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processHTMLEntityEncode()">Encode ke Entitas HTML</button>
+                    <button class="btn-action btn-clear" onclick="clearHTMLEntity()">Bersihkan</button>
+                </div>
+                <textarea id="html-entity-output" readonly placeholder="Hasil kode entitas HTML aman..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>6. Base32 Encoder & Decoder</h2>
+                <textarea id="base32-input" placeholder="Masukkan teks biasa atau kode string Base32..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processBase32Encode()">Base32 Encode</button>
+                    <button class="btn-action btn-orange" onclick="processBase32Decode()">Base32 Decode</button>
+                    <button class="btn-action btn-clear" onclick="clearBase32()">Bersihkan</button>
+                </div>
+                <textarea id="base32-output" readonly placeholder="Hasil pemrosesan string Base32..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>7. Base64 Text Encoder & Decoder</h2>
+                <textarea id="base64-input" placeholder="Masukkan teks biasa untuk di-encode atau string Base64 murni untuk di-decode..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processBase64Encode()">Base64 Encode</button>
+                    <button class="btn-action btn-orange" onclick="processBase64Decode()">Base64 Decode</button>
+                    <button class="btn-action btn-clear" onclick="clearBase64()">Bersihkan</button>
+                </div>
+                <textarea id="base64-output" readonly placeholder="Hasil enkoding/dekoding Base64 nyata..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>8. Morse Code Encoder & Decoder</h2>
+                <textarea id="morse-input" placeholder="Masukkan teks alfabet untuk jadi sandi Morse, atau sandi Morse (pisahkan dengan spasi) untuk jadi teks biasa..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processMorseEncode()">Ubah ke Morse</button>
+                    <button class="btn-action btn-orange" onclick="processMorseDecode()">Terjemahkan Morse</button>
+                    <button class="btn-action btn-clear" onclick="clearMorse()">Bersihkan</button>
+                </div>
+                <textarea id="morse-output" readonly placeholder="Hasil sandi Morse internasional..."></textarea>
+            </section>
+        </div>
+
+
+        <div id="tab-crypto" class="tab-panel">
+            <section class="tool-card">
+                <h2>9. JavaScript Obfuscator Simple</h2>
+                <p class="tool-desc">Mengacak script JavaScript mentah agar kodenya sulit dibaca dan dipahami secara langsung oleh pihak luar.</p>
+                <textarea id="obfuscator-input" placeholder="Tempelkan kode JavaScript fungsional Anda di sini..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processJSObfuscate()">Acak Kode JS</button>
+                    <button class="btn-action btn-clear" onclick="clearObfuscator()">Bersihkan</button>
+                </div>
+                <textarea id="obfuscator-output" readonly placeholder="Hasil pengacakan script (Obfuscated JS)..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>10. XOR Cipher Tool</h2>
+                <p class="tool-desc">Enkripsi atau dekripsi baris teks menggunakan kalkulasi logika XOR dengan kunci rahasia tertentu.</p>
+                <textarea id="xor-input" placeholder="Masukkan plain teks atau chiper teks di sini..."></textarea>
+                <div class="inline-input-group">
+                    <label for="xor-key">Kunci XOR (Key):</label>
+                    <input type="text" id="xor-key" value="Rm19" placeholder="Masukkan kunci bebas...">
+                </div>
+                <div class="btn-group">
+                    <button class="btn-action btn-orange" onclick="processXORCipher()">Eksekusi XOR</button>
+                    <button class="btn-action btn-clear" onclick="clearXORCipher()">Bersihkan</button>
+                </div>
+                <textarea id="xor-output" readonly placeholder="Hasil kriptografi XOR..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>11. ROT13 Obfuscator</h2>
+                <textarea id="rot13-input" placeholder="Masukkan teks alfabet yang ingin Anda samarkan/kembalikan dengan metode pergeseran 13 huruf..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processROT13()">Proses ROT13</button>
+                    <button class="btn-action btn-clear" onclick="clearROT13()">Bersihkan</button>
+                </div>
+                <textarea id="rot13-output" readonly placeholder="Hasil penyamaran ROT13..."></textarea>
+            </section>
+        </div>
+
+
+        <div id="tab-formatters" class="tab-panel">
+            <section class="tool-card">
+                <h2>12. JSON to HTML Table Converter</h2>
+                <p class="tool-desc">Mengubah struktur data array JSON objek mentah menjadi bentuk tabel HTML siap pakai.</p>
+                <textarea id="json-table-input" placeholder='Masukkan data JSON objek di sini. Contoh: [{"nama":"Rm19", "role":"Dev"}]'></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processJSONToTable()">Konversi Jadi Tabel</button>
+                    <button class="btn-action btn-clear" onclick="clearJSONToTable()">Bersihkan</button>
+                </div>
+                <div id="json-table-preview-container" class="table-preview-box">
+                    <span style="color: var(--text-muted);">Pratinjau render tabel nyata akan muncul di sini...</span>
+                </div>
+                <textarea id="json-table-output-code" readonly placeholder="Salinan kode HTML tabel akan muncul di sini..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>13. Markdown to HTML Live Editor</h2>
+                <p class="tool-desc">Menulis sintaks Markdown secara bebas dan langsung melihat visualisasi render HTML nyata secara instan.</p>
+                <div class="markdown-editor-split">
+                    <div class="editor-pane">
+                        <h3>Editor Markdown</h3>
+                        <textarea id="markdown-input" onkeyup="liveRenderMarkdown()" placeholder="# Halo Dunia&#10;Ketik teks **Markdown** di sini..."></textarea>
+                    </div>
+                    <div class="preview-pane">
+                        <h3>Pratinjau Render</h3>
+                        <div id="markdown-preview" class="markdown-preview-output">Hasil ketikan Markdown terjemas secara live di sini...</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tool-card">
+                <h2>14. HTML / CSS / JS Code Minifier</h2>
+                <p class="tool-desc">Membuang spasi kosong, tab, breakline, dan komentar skrip kode untuk mengompres ukuran file web statis.</p>
+                <textarea id="minifier-input" placeholder="Tempel kode berantakan Anda (HTML, CSS, atau JavaScript) di sini..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processCodeMinify()">Kompresi Kode</button>
+                    <button class="btn-action btn-clear" onclick="clearMinifier()">Bersihkan</button>
+                </div>
+                <textarea id="minifier-output" readonly placeholder="Hasil kompresi kode murni tanpa baris sisa..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>15. Robots.txt & Sitemap Builder</h2>
+                <div class="inline-input-group">
+                    <label for="seo-domain-url">URL Domain Utama:</label>
+                    <input type="url" id="seo-domain-url" value="https://github.com/Rm19x" placeholder="https://domain-anda.com">
+                </div>
+                <div class="btn-group">
+                    <button class="btn-action btn-orange" onclick="buildSEOFilesReal()">Buat Struktur SEO</button>
+                </div>
+                <div class="markdown-editor-split">
+                    <div>
+                        <h3>Hasil Robots.txt</h3>
+                        <textarea id="seo-robots-output" readonly placeholder="Menunggu pembuatan file..."></textarea>
+                    </div>
+                    <div>
+                        <h3>Hasil sitemap.xml</h3>
+                        <textarea id="seo-sitemap-output" readonly placeholder="Menunggu pembuatan file..."></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tool-card">
+                <h2>16. Binary / Hex / Decimal Converter</h2>
+                <p class="tool-desc">Konversi angka desimal atau kata teks biasa langsung menjadi susunan biner dan heksadesimal.</p>
+                <div class="inline-input-group">
+                    <label for="converter-input-text">Input Data:</label>
+                    <input type="text" id="converter-input-text" placeholder="Masukkan angka desimal atau string teks...">
+                </div>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processSystemNumericConvert()">Konversi Angka/Teks</button>
+                    <button class="btn-action btn-clear" onclick="clearNumericConverter()">Bersihkan</button>
+                </div>
+                <div class="inline-input-group"><label>Hasil Biner:</label><input type="text" id="convert-out-bin" readonly></div>
+                <div class="inline-input-group"><label>Hasil Hex:</label><input type="text" id="convert-out-hex" readonly></div>
+            </section>
+        </div>
+
+
+        <div id="tab-visual" class="tab-panel">
+            <section class="tool-card">
+                <h2>17. Regex Code Generator Simple</h2>
+                <p class="tool-desc">Membuat pola Regex siap pakai berdasarkan kriteria pencarian string teks umum.</p>
+                <div class="inline-input-group">
+                    <label for="regex-rule-select">Kriteria Aturan:</label>
+                    <select id="regex-rule-select">
+                        <option value="email">Pencarian Alamat Email Valid</option>
+                        <option value="ipv4">Deteksi IP Address v4</option>
+                        <option value="alpha-numeric">Hanya Karakter Alfanumerik (A-Z, 0-9)</option>
+                        <option value="http-url">Deteksi Link URL Awalan HTTP/HTTPS</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="generateRegexPatternReal()">Buat Pola Regex</button>
+                </div>
+                <div class="inline-input-group"><label>Pola Regex:</label><input type="text" id="regex-pattern-output" readonly></div>
+                <div class="inline-input-group"><label>Fungsi JS:</label><input type="text" id="regex-js-output" readonly></div>
+            </section>
+
+            <section class="tool-card">
+                <h2>18. CSS Flexbox Layout Creator</h2>
+                <div class="visualizer-control-panel">
+                    <label>Flex Direction: 
+                        <select id="flex-dir" onchange="updateFlexboxVisualizer()">
+                            <option value="row">row</option>
+                            <option value="column">column</option>
+                        </select>
+                    </label>
+                    <label>Justify Content: 
+                        <select id="flex-justify" onchange="updateFlexboxVisualizer()">
+                            <option value="flex-start">flex-start</option>
+                            <option value="center">center</option>
+                            <option value="space-between">space-between</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="flex-sandbox-container" id="flex-sandbox">
+                    <div class="flex-box-item">1</div>
+                    <div class="flex-box-item">2</div>
+                    <div class="flex-box-item">3</div>
+                </div>
+                <textarea id="flex-css-code-output" readonly placeholder="Kode CSS Flexbox otomatis..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>19. CSS Grid Layout Creator</h2>
+                <div class="visualizer-control-panel">
+                    <label>Kolom Grid: <input type="number" id="grid-cols-count" value="3" min="1" max="6" onchange="updateGridVisualizer()"></label>
+                    <label>Gap (px): <input type="number" id="grid-gap-count" value="10" min="0" max="50" onchange="updateGridVisualizer()"></label>
+                </div>
+                <div class="grid-sandbox-container" id="grid-sandbox">
+                    <div class="grid-box-item">A</div>
+                    <div class="grid-box-item">B</div>
+                    <div class="grid-box-item">C</div>
+                    <div class="grid-box-item">D</div>
+                </div>
+                <textarea id="grid-css-code-output" readonly placeholder="Kode CSS Grid otomatis..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>20. JavaScript Array Shuffler</h2>
+                <p class="tool-desc">Mengacak tumpukan elemen di dalam format array kode JavaScript murni memakai algoritma acak adil.</p>
+                <textarea id="array-shuffler-input" placeholder='Masukkan array data terpisah koma atau format array JS. Contoh: ["Apel", "Mangga", "Jeruk", "Pisang"]'></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processArrayShuffleReal()">Acak Array</button>
+                    <button class="btn-action btn-clear" onclick="clearArrayShuffler()">Bersihkan</button>
+                </div>
+                <textarea id="array-shuffler-output" readonly placeholder="Hasil urutan array yang sudah teracak nyata..."></textarea>
+            </section>
+
+            <section class="tool-card">
+                <h2>21. Bencode Encoder & Decoder</h2>
+                <p class="tool-desc">Memproses pengodean data string teks mentah menjadi arsitektur format enkapsulasi Bencode biner.</p>
+                <textarea id="bencode-input" placeholder="Masukkan string teks murni biasa (contoh: hello) atau string Bencode resmi (contoh: 5:hello)..."></textarea>
+                <div class="btn-group">
+                    <button class="btn-action btn-green" onclick="processBencodeEncode()">Bencode Encode</button>
+                    <button class="btn-action btn-orange" onclick="processBencodeDecode()">Bencode Decode</button>
+                    <button class="btn-action btn-clear" onclick="clearBencode()">Bersihkan</button>
+                </div>
+                <textarea id="bencode-output" readonly placeholder="Hasil struktur data Bencode..."></textarea>
+            </section>
+        </div>
+
+    </main>
+
+    <footer class="main-footer">
+        Developer Requirements System Platform &copy; 2026 | Powered by <a href="https://github.com/Rm19x" target="_blank" rel="noopener noreferrer">Mr.Rm19</a>
+    </footer>
+</div>
+
+<script>
+function prosesHapusMassalReal() {
+    let pusatRaw = document.getElementById('websitePusat').value.split('\n');
+    let hapusRaw = document.getElementById('websiteHapus').value.split('\n');
+    
+    let listPusat = pusatRaw.map(item => item.trim().toLowerCase()).filter(item => item !== "");
+    let listHapus = new Set(hapusRaw.map(item => item.trim().toLowerCase()).filter(item => item !== ""));
+
+    let hasilBersih = listPusat.filter(domain => !listHapus.has(domain));
+    let jumlahTerhapus = listPusat.length - hasilBersih.length;
+
+    document.getElementById('websiteHasil').value = hasilBersih.join('\n');
+    document.getElementById('totalTerhapus').innerText = jumlahTerhapus;
+    document.getElementById('mass-delete-result-container').style.display = 'block';
+}
+
+function clearMassDeleter() {
+    document.getElementById('websitePusat').value = '';
+    document.getElementById('websiteHapus').value = '';
+    document.getElementById('websiteHasil').value = '';
+    document.getElementById('totalTerhapus').innerText = '0';
+    document.getElementById('mass-delete-result-container').style.display = 'none';
+}
+</script>
+
+<script src="app.js"></script>
+<script src="js/core-tools.js"></script>
+<script src="js/encoder-decoder.js"></script>
+<script src="js/crypto-obfuscator.js"></script>
+<script src="js/dev-formatters.js"></script>
+<script src="js/visual-generators.js"></script>
+</body>
+</html>
